@@ -12,7 +12,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor(red: 253, green: 253, blue: 253, alpha: 1.0) // offwhite #FDFDFD
+        
+        // Set Background Color to offwhite #FDFDFD
+        self.view.backgroundColor = .systemGray5//UIColor(red: 253, green: 253, blue: 253, alpha: 1.0)
+        // Set the title for the navigation bar
+        self.title = "AudioPod"
     }
 
 
