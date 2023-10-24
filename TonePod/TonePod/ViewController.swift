@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     var audioRecorder: AVAudioRecorder?
     var audioFileName: Int = 0
+    var recordButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,7 @@ class ViewController: UIViewController {
         self.title = "AudioPod"
         
         // Create and configure the button
-        let recordButton = UIButton(type: .system)
+        recordButton = UIButton(type: .system)
         recordButton.setTitle("Record", for: .normal)
         recordButton.addTarget(self, action: #selector(startRecording), for: .touchUpInside)
         recordButton.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +54,7 @@ class ViewController: UIViewController {
             // Stop recording
             audioRecorder?.stop()
             isRecording = false
+            recordButton.setTitle("Record", for: .normal)
             print("Stopped recording.")
             
         } else {
@@ -79,7 +81,10 @@ class ViewController: UIViewController {
                     self?.audioRecorder?.record()
                     self?.isRecording = true
                     print("Recording started.")
+                    self?.recordButton.setTitle("Stop", for: .normal)
                     print(audioFilename?.path ?? "Failed")
+                    
+
                 } catch {
                     print("Error starting audio recording: \(error)")
                 }
@@ -87,12 +92,14 @@ class ViewController: UIViewController {
         }
     }
 
+    
+    
+    // MARK: Utilities
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
-    // MARK: Utilities
     func requestMicrophonePermission(completion: @escaping (Bool) -> Void) {
         AVAudioSession.sharedInstance().requestRecordPermission { allowed in
             DispatchQueue.main.async {
