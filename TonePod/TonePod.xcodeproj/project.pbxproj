@@ -13,6 +13,7 @@
 		85B6AA752AE4389D00CDF4C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85B6AA732AE4389D00CDF4C0 /* Main.storyboard */; };
 		85B6AA772AE4389E00CDF4C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85B6AA762AE4389E00CDF4C0 /* Assets.xcassets */; };
 		85B6AA7A2AE4389E00CDF4C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85B6AA782AE4389E00CDF4C0 /* LaunchScreen.storyboard */; };
+		85B6AAA22AE8201800CDF4C0 /* RandomWordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		85B6AA762AE4389E00CDF4C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85B6AA792AE4389E00CDF4C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85B6AA7B2AE4389E00CDF4C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */,
 				85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */,
 				85B6AA712AE4389D00CDF4C0 /* ViewController.swift */,
+				85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */,
 				85B6AA732AE4389D00CDF4C0 /* Main.storyboard */,
 				85B6AA762AE4389E00CDF4C0 /* Assets.xcassets */,
 				85B6AA782AE4389E00CDF4C0 /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85B6AA722AE4389D00CDF4C0 /* ViewController.swift in Sources */,
+				85B6AAA22AE8201800CDF4C0 /* RandomWordAPI.swift in Sources */,
 				85B6AA6E2AE4389D00CDF4C0 /* AppDelegate.swift in Sources */,
 				85B6AA702AE4389D00CDF4C0 /* SceneDelegate.swift in Sources */,
 			);
