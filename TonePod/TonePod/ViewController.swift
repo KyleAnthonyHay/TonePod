@@ -10,16 +10,22 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
+    // MARK: Variable Declaration
     var audioRecorder: AVAudioRecorder?
     var recordButton: UIButton!
     var audioFileNumber: Int = 0
     var apiProvidedFileName: String = "r"// optionally Provided by User
     var apiProvidedFileName2: RandomWord?
     
-    // MARK: Render
+    // Declare an instance of AudioRecordingManager
+    var audioManager: AudioRecordingManager!
     
+    // MARK: Render
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Initialize the audio manager
+        audioManager = AudioRecordingManager(viewController: self)
         
         // Set the background color and title
         self.view.backgroundColor = UIColor(red: 253/255.0, green: 253/255.0, blue: 253/255.0, alpha: 1.0)
@@ -73,28 +79,16 @@ class ViewController: UIViewController {
         
         // Recording Started
         } else {
-            requestMicrophonePermission { [weak self] allowed in
+            audioManager.requestMicrophonePermission { [weak self] allowed in
                 guard allowed else {
                     // Handle the case where the user denied microphone access
                     print("Microphone access denied")
                     return
                 }
                 
-//                // MARK: API Call
-//                // API CALL TEST
-//                Task{
-//                    do {
-//                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self!.apiProvidedFileName)
-//                        self?.apiProvidedFileName2 = response
-//                        print("From Start Recording Func: \(self?.apiProvidedFileName2?.word ?? "No word returned")")
-//                    } catch {
-//                        print(error)
-//                    }
-//                }
-                
-                self?.configureAudioSession()
+                self?.audioManager.configureAudioSession()
                 self?.audioFileNumber += 1
-                let audioFilename = self?.getDocumentsDirectory().appendingPathComponent("recording\(self?.audioFileNumber ?? 0).m4a")
+                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("recording\(self?.audioFileNumber ?? 0).m4a")
                 let settings = [
                     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                     AVSampleRateKey: 12000,
@@ -118,33 +112,6 @@ class ViewController: UIViewController {
         }
     }
 
-    
-    
-    // MARK: Utilities
-    func configureAudioSession() {
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(.record, mode: .default)
-            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            print("Error setting up audio session: \(error)")
-        }
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    
-    func requestMicrophonePermission(completion: @escaping (Bool) -> Void) {
-        AVAudioSession.sharedInstance().requestRecordPermission { allowed in
-            DispatchQueue.main.async {
-                completion(allowed)
-            }
-        }
-    }
-    
     func promptForFileName() {
         // Create an alert to ask the user for the filename
         let alertController = UIAlertController(title: "What letter should the name start with?", message: " ", preferredStyle: .alert)

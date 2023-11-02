@@ -17,6 +17,7 @@ class AudioRecordingManager {
         self.viewController = viewController
     }
     
+    
     // MARK: Utilities
     func configureAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
