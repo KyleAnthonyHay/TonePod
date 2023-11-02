@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     var isRecording = false
 
     @objc func startRecording() {
+        // Recording Stopped
         if isRecording {
             // Stop recording
             audioRecorder?.stop()
@@ -54,8 +55,23 @@ class ViewController: UIViewController {
             recordButton.setTitle("Record", for: .normal)
             print("Stopped recording.\n\n")
             
-            // Pompt User to Name File
+            // After Stopping Recording, Pompt User to Name File
+            self.promptForFileName()
+            // MARK: API Call
+            // API CALL TEST
+            Task{
+                do {
+                    let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self.apiProvidedFileName)
+                    self.apiProvidedFileName2 = response
+                    print("From Start Recording Func: \(self.apiProvidedFileName2?.word ?? "No word returned")")
+                } catch {
+                    print(error)
+                }
+            }
             
+            
+        
+        // Recording Started
         } else {
             requestMicrophonePermission { [weak self] allowed in
                 guard allowed else {
@@ -64,17 +80,17 @@ class ViewController: UIViewController {
                     return
                 }
                 
-                // MARK: API Call
-                // API CALL TEST
-                Task{
-                    do {
-                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self!.apiProvidedFileName)
-                        self?.apiProvidedFileName2 = response
-                        print("From Start Recording Func: \(self?.apiProvidedFileName2?.word ?? "No word returned")")
-                    } catch {
-                        print(error)
-                    }
-                }
+//                // MARK: API Call
+//                // API CALL TEST
+//                Task{
+//                    do {
+//                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self!.apiProvidedFileName)
+//                        self?.apiProvidedFileName2 = response
+//                        print("From Start Recording Func: \(self?.apiProvidedFileName2?.word ?? "No word returned")")
+//                    } catch {
+//                        print(error)
+//                    }
+//                }
                 
                 self?.configureAudioSession()
                 self?.audioFileNumber += 1
@@ -106,7 +122,6 @@ class ViewController: UIViewController {
     
     // MARK: Utilities
     func configureAudioSession() {
-        self.promptForFileName() // GET FILE NAME
         
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -140,14 +155,17 @@ class ViewController: UIViewController {
         }
         
         // Add a "Confirm" action to the alert
-//        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self, weak alertController] _ in
-//            if let textField = alertController?.textFields?.first, let userInput = textField.text {
-//                // Here, 'userInput' contains the text entered by the user
-//                // You can store it in a property or use it as needed
-//                self?.apiProvidedFileName = userInput
-//            }
-//        }
-//        alertController.addAction(confirmAction)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self, weak alertController] _ in
+            if let textField = alertController?.textFields?.first, let userInput = textField.text {
+                // Here, 'userInput' contains the text entered by the user
+                // You can store it in a property or use it as needed
+                self?.apiProvidedFileName = userInput
+                self?.apiProvidedFileName2 = RandomWord(word: userInput)
+                print("User Input: \(self?.apiProvidedFileName2?.word ?? "No Input")")
+
+            }
+        }
+        alertController.addAction(confirmAction)
         
         // Add a "Cancel" action to the alert
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
