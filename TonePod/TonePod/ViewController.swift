@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         // Create and configure the button
         recordButton = UIButton(type: .system)
         recordButton.setTitle("Record", for: .normal)
-        recordButton.addTarget(self, action: #selector(startRecording), for: .touchUpInside)
+        recordButton.addTarget(self, action: #selector(onRecordButtonTapped), for: .touchUpInside)
         recordButton.translatesAutoresizingMaskIntoConstraints = false
         
         // Add the button to the view
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     // MARK: Handle Recording
     var isRecording = false
 
-    @objc func startRecording() {
+    @objc func startRecording(filename: String) {
         // Recording Stopped
         if isRecording {
             
@@ -62,8 +62,6 @@ class ViewController: UIViewController {
             recordButton.setTitle("Record", for: .normal)
             print("Stopped recording.\n\n")
             
-            // After Stopping Recording, Pompt User to Name File
-            self.promptForFileName()
         
         } else { // Recording Started
             audioManager.requestMicrophonePermission { [weak self] allowed in
@@ -75,8 +73,7 @@ class ViewController: UIViewController {
                 
                 self?.audioManager.configureAudioSession()
                 self?.audioFileNumber += 1
-//                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("recording\(self?.audioFileNumber ?? 0).m4a")
-                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("\(self!.apiProvidedFileName2?.word ?? "0").m4a")
+                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("\(filename).m4a")
                 let settings = [
                     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                     AVSampleRateKey: 12000,
@@ -101,45 +98,45 @@ class ViewController: UIViewController {
     }
 
     func promptForFileName() {
-        // Create an alert to ask the user for the filename
         let alertController = UIAlertController(title: "What letter should the name start with?", message: " ", preferredStyle: .alert)
         
-        // Add a text field to the alert for the filename input
         alertController.addTextField { (textField) in
             textField.placeholder = "first letter.."
         }
         
-        // Add a "Confirm" action to the alert
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self, weak alertController] _ in
             if let textField = alertController?.textFields?.first, let userInput = textField.text {
-                // Here, 'userInput' contains the text entered by the user
-                // You can store it in a property or use it as needed
-                self?.apiProvidedFileName = userInput
-                self?.apiProvidedFileName2 = RandomWord(word: userInput)
-                print("User Input: \(self?.apiProvidedFileName2?.word ?? "No Input")")
-                
                 // MARK: API Call
-                // API CALL TEST
-                Task{
+                Task {
                     do {
-                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self!.apiProvidedFileName)//USING HARDCODED VALUE
-                        self!.apiProvidedFileName2 = response
-                        // MARK: Printing API Name
-                        print("From Start Recording Func: \(self!.apiProvidedFileName2?.word ?? "No word returned")")
+                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: userInput)
+                        self?.apiProvidedFileName2 = response
+                        print("From API: \(self?.apiProvidedFileName2?.word ?? "No word returned")")
+                        
+                        // Start recording after API responds
+                        if let filename = self?.apiProvidedFileName2?.word {
+                            self?.startRecording(filename: filename)
+                        }
                     } catch {
                         print(error)
                     }
                 }
-
             }
         }
         alertController.addAction(confirmAction)
         
-        // Add a "Cancel" action to the alert
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func onRecordButtonTapped() {
+        if isRecording {
+            startRecording(filename: "0")  // Provide a default filename here
+        } else {
+            promptForFileName()
+        }
     }
 
 
