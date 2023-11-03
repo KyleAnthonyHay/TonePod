@@ -55,6 +55,7 @@ class ViewController: UIViewController {
     @objc func startRecording() {
         // Recording Stopped
         if isRecording {
+            
             // Stop recording
             audioRecorder?.stop()
             isRecording = false
@@ -63,22 +64,8 @@ class ViewController: UIViewController {
             
             // After Stopping Recording, Pompt User to Name File
             self.promptForFileName()
-            // MARK: API Call
-            // API CALL TEST
-            Task{
-                do {
-                    let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self.apiProvidedFileName)
-                    self.apiProvidedFileName2 = response
-                    print("From Start Recording Func: \(self.apiProvidedFileName2?.word ?? "No word returned")")
-                } catch {
-                    print(error)
-                }
-            }
-            
-            
         
-        // Recording Started
-        } else {
+        } else { // Recording Started
             audioManager.requestMicrophonePermission { [weak self] allowed in
                 guard allowed else {
                     // Handle the case where the user denied microphone access
@@ -88,7 +75,8 @@ class ViewController: UIViewController {
                 
                 self?.audioManager.configureAudioSession()
                 self?.audioFileNumber += 1
-                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("recording\(self?.audioFileNumber ?? 0).m4a")
+//                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("recording\(self?.audioFileNumber ?? 0).m4a")
+                let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("\(self!.apiProvidedFileName2?.word ?? "0").m4a")
                 let settings = [
                     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                     AVSampleRateKey: 12000,
@@ -129,6 +117,19 @@ class ViewController: UIViewController {
                 self?.apiProvidedFileName = userInput
                 self?.apiProvidedFileName2 = RandomWord(word: userInput)
                 print("User Input: \(self?.apiProvidedFileName2?.word ?? "No Input")")
+                
+                // MARK: API Call
+                // API CALL TEST
+                Task{
+                    do {
+                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: self!.apiProvidedFileName)//USING HARDCODED VALUE
+                        self!.apiProvidedFileName2 = response
+                        // MARK: Printing API Name
+                        print("From Start Recording Func: \(self!.apiProvidedFileName2?.word ?? "No word returned")")
+                    } catch {
+                        print(error)
+                    }
+                }
 
             }
         }
