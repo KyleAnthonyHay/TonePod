@@ -15,6 +15,7 @@
 		85B6AA7A2AE4389E00CDF4C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85B6AA782AE4389E00CDF4C0 /* LaunchScreen.storyboard */; };
 		85B6AAA22AE8201800CDF4C0 /* RandomWordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */; };
 		85CA7AD42AF426B600BCDD7D /* AudioRecordingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA7AD32AF426B600BCDD7D /* AudioRecordingManager.swift */; };
+		85D6BF832B0521F200F8F967 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D6BF822B0521F200F8F967 /* GroupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		85B6AA7B2AE4389E00CDF4C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordAPI.swift; sourceTree = "<group>"; };
 		85CA7AD32AF426B600BCDD7D /* AudioRecordingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingManager.swift; sourceTree = "<group>"; };
+		85D6BF822B0521F200F8F967 /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */,
 				85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */,
 				85B6AA712AE4389D00CDF4C0 /* ViewController.swift */,
+				85D6BF822B0521F200F8F967 /* GroupViewController.swift */,
 				85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */,
 				85CA7AD32AF426B600BCDD7D /* AudioRecordingManager.swift */,
 				85B6AA732AE4389D00CDF4C0 /* Main.storyboard */,
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85D6BF832B0521F200F8F967 /* GroupViewController.swift in Sources */,
 				85CA7AD42AF426B600BCDD7D /* AudioRecordingManager.swift in Sources */,
 				85B6AA722AE4389D00CDF4C0 /* ViewController.swift in Sources */,
 				85B6AAA22AE8201800CDF4C0 /* RandomWordAPI.swift in Sources */,

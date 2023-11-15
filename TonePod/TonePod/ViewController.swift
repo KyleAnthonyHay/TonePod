@@ -29,11 +29,13 @@ class ViewController: UIViewController {
         
         // Set the background color and title
         self.view.backgroundColor = UIColor(red: 253/255.0, green: 253/255.0, blue: 253/255.0, alpha: 1.0)
-        self.title = "AudioPod"
+        self.title = "Record"
+        navigationController?.tabBarItem.image = UIImage(systemName: "record.circle")
+        navigationController?.tabBarItem.title = "Record"
         
         // Create and configure the button
         recordButton = UIButton(type: .system)
-        recordButton.setTitle("Record", for: .normal)
+        recordButton.setTitle("Start", for: .normal) //initial title
         recordButton.addTarget(self, action: #selector(onRecordButtonTapped), for: .touchUpInside)
         recordButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -59,7 +61,7 @@ class ViewController: UIViewController {
             // Stop recording
             audioRecorder?.stop()
             isRecording = false
-            recordButton.setTitle("Record", for: .normal)
+            recordButton.setTitle("Start", for: .normal) // set title from "stop to Start"
             print("Stopped recording.\n\n")
             
         
