@@ -9,8 +9,10 @@ import UIKit
 
 class GroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
  
+    let fileManager = FileManager.default
+    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    var audioFiles: [String] = []
     
-    let testData = ["one", "two", "three"]
 //    var countries: Array<Any>
     
     lazy var tableView: UITableView = {
@@ -36,17 +38,31 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        loadAudioFiles()
     }
     
 
+    // MARK: - Load Audio Files
+     func loadAudioFiles() {
+         do {
+             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+             audioFiles = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
+                               .map { $0.lastPathComponent }
+             tableView.reloadData()
+         } catch {
+             print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
+         }
+     }
+    
     // MARK: Delegate & DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return audioFiles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "audioFile")
-        cell.textLabel?.text = testData[indexPath.row]
+        cell.textLabel?.text = audioFiles[indexPath.row]
         return cell
     }
 
