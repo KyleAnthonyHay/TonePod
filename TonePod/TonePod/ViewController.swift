@@ -63,6 +63,7 @@ class ViewController: UIViewController {
             isRecording = false
             recordButton.setTitle("Start", for: .normal) // set title from "stop to Start"
             print("Stopped recording.\n\n")
+            // TODO: Reload Groups page when recording is finished
             
         
         } else { // Recording Started

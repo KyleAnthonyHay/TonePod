@@ -74,7 +74,8 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let AudioFileViewController = AudioFileViewController()
+        let letter = Array(firstLetters)[indexPath.row]
+        let AudioFileViewController = AudioFileViewController(startswith: String(letter) )
         navigationController?.pushViewController(AudioFileViewController, animated: true)
     }
 
