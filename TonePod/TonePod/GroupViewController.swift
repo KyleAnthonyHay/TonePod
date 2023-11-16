@@ -12,8 +12,7 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
     let fileManager = FileManager.default
     let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     var audioFiles: [String] = []
-    
-//    var countries: Array<Any>
+    var firstLetters: Set<Character> = []
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -25,6 +24,8 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LetterCell")
+
         // Initial UI
         self.view.backgroundColor = UIColor(red: 253/255.0, green: 253/255.0, blue: 253/255.0, alpha: 1.0)
         self.title = "Groups"
@@ -39,7 +40,8 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
-        loadAudioFiles()
+        loadAudioFiles() // into array
+        updateFirstLetters() // for groups
     }
     
 
@@ -48,22 +50,32 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
          do {
              let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
              audioFiles = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
-                               .map { $0.lastPathComponent }
+                               .map { $0.lastPathComponent } //audio files loaded
              tableView.reloadData()
          } catch {
              print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
          }
      }
     
+    func updateFirstLetters() {
+            firstLetters = Set(audioFiles.map { $0.first ?? "#" })
+        }
+    
     // MARK: Delegate & DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return audioFiles.count
+        return firstLetters.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "audioFile")
-        cell.textLabel?.text = audioFiles[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LetterCell", for: indexPath)
+        let letter = Array(firstLetters)[indexPath.row]
+        cell.textLabel?.text = String(letter)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let AudioFileViewController = AudioFileViewController()
+        navigationController?.pushViewController(AudioFileViewController, animated: true)
     }
 
 }
