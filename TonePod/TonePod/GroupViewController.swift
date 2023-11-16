@@ -42,6 +42,8 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         loadAudioFiles() // into array
         updateFirstLetters() // for groups
+        // Listen for new recording to update
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTableData), name: .didFinishRecording, object: nil)
     }
     
 
@@ -77,6 +79,13 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         let letter = Array(firstLetters)[indexPath.row]
         let AudioFileViewController = AudioFileViewController(startswith: String(letter) )
         navigationController?.pushViewController(AudioFileViewController, animated: true)
+    }
+    
+    // Function for reloading the data
+    @objc func refreshTableData() {
+        loadAudioFiles()
+        updateFirstLetters()
+        tableView.reloadData()
     }
 
 }

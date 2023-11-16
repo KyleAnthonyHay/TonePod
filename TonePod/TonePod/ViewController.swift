@@ -63,8 +63,8 @@ class ViewController: UIViewController {
             isRecording = false
             recordButton.setTitle("Start", for: .normal) // set title from "stop to Start"
             print("Stopped recording.\n\n")
-            // TODO: Reload Groups page when recording is finished
-            
+            // Notify Listerners that new recording has been added
+            NotificationCenter.default.post(name: .didFinishRecording, object: nil)
         
         } else { // Recording Started
             audioManager.requestMicrophonePermission { [weak self] allowed in
@@ -77,6 +77,7 @@ class ViewController: UIViewController {
                 self?.audioManager.configureAudioSession()
                 self?.audioFileNumber += 1
                 let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("\(filename).m4a")
+                
                 let settings = [
                     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                     AVSampleRateKey: 12000,
@@ -143,4 +144,9 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+// MARK: Extentions
+extension Notification.Name {
+    static let didFinishRecording = Notification.Name("didFinishRecording")
 }
