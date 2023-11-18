@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8506CF5A2B0688D500214BA4 /* AudioFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506CF592B0688D500214BA4 /* AudioFileViewController.swift */; };
+		857EFF7C2B095B2400FC41D2 /* AudioFile_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */; };
 		85B6AA6E2AE4389D00CDF4C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */; };
 		85B6AA702AE4389D00CDF4C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */; };
 		85B6AA722AE4389D00CDF4C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA712AE4389D00CDF4C0 /* ViewController.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		8506CF592B0688D500214BA4 /* AudioFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileViewController.swift; sourceTree = "<group>"; };
+		857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFile_TableViewCell.swift; sourceTree = "<group>"; };
 		85B6AA6A2AE4389D00CDF4C0 /* TonePod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonePod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		857EFF7D2B095B3B00FC41D2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		85B6AA612AE4389D00CDF4C0 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +74,7 @@
 		85B6AA6C2AE4389D00CDF4C0 /* TonePod */ = {
 			isa = PBXGroup;
 			children = (
+				857EFF7D2B095B3B00FC41D2 /* Cells */,
 				85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */,
 				85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */,
 				85B6AA712AE4389D00CDF4C0 /* ViewController.swift */,
@@ -154,6 +165,7 @@
 				85CA7AD42AF426B600BCDD7D /* AudioRecordingManager.swift in Sources */,
 				8506CF5A2B0688D500214BA4 /* AudioFileViewController.swift in Sources */,
 				85B6AA722AE4389D00CDF4C0 /* ViewController.swift in Sources */,
+				857EFF7C2B095B2400FC41D2 /* AudioFile_TableViewCell.swift in Sources */,
 				85B6AAA22AE8201800CDF4C0 /* RandomWordAPI.swift in Sources */,
 				85B6AA6E2AE4389D00CDF4C0 /* AppDelegate.swift in Sources */,
 				85B6AA702AE4389D00CDF4C0 /* SceneDelegate.swift in Sources */,

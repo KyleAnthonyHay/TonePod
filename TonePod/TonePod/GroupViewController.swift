@@ -53,6 +53,8 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
              let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
              audioFiles = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
                                .map { $0.lastPathComponent } //audio files loaded
+             audioFiles.sort()
+             print("Sorted audio files: \(audioFiles)")
              tableView.reloadData()
          } catch {
              print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
