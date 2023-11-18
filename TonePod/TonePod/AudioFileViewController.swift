@@ -32,7 +32,7 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AudioFile")
+        tableView.register(AudioFile_TableViewCell.self, forCellReuseIdentifier: "AudioFile")
 
         // Do any additional setup after loading the view.
         view.addSubview(tableView)
@@ -62,6 +62,14 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         print(groupedAudioFiles)
     }
     
+    @objc func handlePlayButton(_ sender: UIButton) {
+        if let cell = sender.superview as? AudioFile_TableViewCell,
+           let indexPath = tableView.indexPath(for: cell) {
+            // Handle play action for the item at indexPath
+        }
+    }
+
+    
     // MARK: Delegate and Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupedAudioFiles.count
@@ -70,6 +78,8 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AudioFile", for: indexPath)
         cell.textLabel?.text = groupedAudioFiles[indexPath.row]
+        // Configure the play button if needed
+        // cell.playButton.addTarget(self, action: #selector(handlePlayButton(_:)), for: .touchUpInside)
         return cell
     }
 }

@@ -8,16 +8,30 @@
 import UIKit
 
 class AudioFile_TableViewCell: UITableViewCell {
+    
+    var playButton: UIButton!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+            setupPlayButton()
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+            setupPlayButton()
+        }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+        private func setupPlayButton() {
+            playButton = UIButton(type: .system)
+            playButton.setTitle("▶️", for: .normal)
+            addSubview(playButton)
+            playButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                playButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+                playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            ])
+            // Add target and action for button if needed
+            // playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+        }
 
 }
