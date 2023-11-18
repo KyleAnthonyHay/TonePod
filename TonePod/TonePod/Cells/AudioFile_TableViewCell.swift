@@ -23,7 +23,7 @@ class AudioFile_TableViewCell: UITableViewCell {
 
         private func setupPlayButton() {
             playButton = UIButton(type: .system)
-            playButton.setTitle("▶️", for: .normal)
+            playButton.setImage(UIImage(systemName: "play.fill"), for: .normal) 
             addSubview(playButton)
             playButton.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
