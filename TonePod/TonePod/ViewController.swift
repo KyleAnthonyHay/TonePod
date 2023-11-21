@@ -47,8 +47,6 @@ class ViewController: UIViewController {
             recordButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             recordButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
-        
-        
     }
 
     // MARK: Handle Recording
@@ -77,7 +75,6 @@ class ViewController: UIViewController {
                 self?.audioManager.configureAudioSession()
                 self?.audioFileNumber += 1
                 let audioFilename = self?.audioManager.getDocumentsDirectory().appendingPathComponent("\(filename).m4a")
-                
                 let settings = [
                     AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                     AVSampleRateKey: 12000,

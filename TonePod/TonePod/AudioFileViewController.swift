@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import AVFoundation
 
-class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+//!!AudioFile_TableViewCell_Delegate
+class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, AudioFile_TableViewCell_Delegate {
     //variables
     var groupedAudioFiles: [String] = []
+    var audioPlayer: AVAudioPlayer?
     let fileManager = FileManager.default
     let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//    let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+    
     let letterClass: String //provided by Group Controller
-   
+    
     init(startswith: String){
         self.letterClass = startswith
         super.init(nibName: nil, bundle: nil)
@@ -27,6 +32,7 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.allowsSelection = false
         return tableView
     }()
 
@@ -45,8 +51,6 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         filterAudioFiles(starts_with: letterClass)
     }
     
-    
-    
     func filterAudioFiles(starts_with letter: String) {
         do {
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
@@ -58,17 +62,8 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         } catch {
             print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
         }
-        
-        print(groupedAudioFiles)
+        print("Grouped Audio Files:", groupedAudioFiles)
     }
-    
-    @objc func handlePlayButton(_ sender: UIButton) {
-        if let cell = sender.superview as? AudioFile_TableViewCell,
-           let indexPath = tableView.indexPath(for: cell) {
-            // Handle play action for the item at indexPath
-        }
-    }
-
     
     // MARK: Delegate and Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,11 +71,47 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AudioFile", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioFile", for: indexPath) as? AudioFile_TableViewCell else {
+            fatalError("The dequeued cell is not an instance of AudioFile_TableViewCell.")
+        }
+        cell.delegate = self // Set the view controller as the delegate
         cell.textLabel?.text = groupedAudioFiles[indexPath.row]
-        // Configure the play button if needed
-        // cell.playButton.addTarget(self, action: #selector(handlePlayButton(_:)), for: .touchUpInside)
         return cell
     }
-}
 
+    //MARK: other functions
+    @objc func handlePlayButton(_ sender: UIButton) {
+        print("Inside HandlePlayButton() Function!")
+        if let cell = sender.superview as? AudioFile_TableViewCell,
+           let indexPath = tableView.indexPath(for: cell) {
+            // Handle play action for the item at indexPath
+            let fileName = groupedAudioFiles[indexPath.row]
+            playAudioFile(named: fileName)
+        }
+    }
+    
+    func playAudioFile(named fileName: String) {
+            let fileURL = documentsURL.appendingPathComponent(fileName)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: fileURL)
+                audioPlayer?.delegate = self
+                audioPlayer?.play()
+            } catch {
+                print("Failed to play audio file: \(error)")
+            }
+        }
+    
+    func playButtonTapped(cell: AudioFile_TableViewCell) {
+        print("Inside HandlePlayButton() Function!")
+        if let indexPath = tableView.indexPath(for: cell) {
+            
+            let fileName = groupedAudioFiles[indexPath.row]
+            playAudioFile(named: fileName)
+        }
+    }
+    
+    // Implement AVAudioPlayerDelegate methods if needed
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {//!!
+        // Handle completion of audio playback
+    }
+}

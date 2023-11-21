@@ -45,7 +45,12 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Listen for new recording to update
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTableData), name: .didFinishRecording, object: nil)
     }
-    
+    // Function for reloading the data
+    @objc func refreshTableData() {
+        loadAudioFiles()
+        updateFirstLetters()
+        tableView.reloadData()
+    }
 
     // MARK: - Load Audio Files
      func loadAudioFiles() {
@@ -54,7 +59,7 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
              audioFiles = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
                                .map { $0.lastPathComponent } //audio files loaded
              audioFiles.sort()
-             print("Sorted audio files: \(audioFiles)")
+//             print("Sorted audio files: \(audioFiles)")
              tableView.reloadData()
          } catch {
              print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
@@ -81,13 +86,6 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         let letter = Array(firstLetters)[indexPath.row]
         let AudioFileViewController = AudioFileViewController(startswith: String(letter) )
         navigationController?.pushViewController(AudioFileViewController, animated: true)
-    }
-    
-    // Function for reloading the data
-    @objc func refreshTableData() {
-        loadAudioFiles()
-        updateFirstLetters()
-        tableView.reloadData()
     }
 
 }
