@@ -58,6 +58,7 @@ class AudioFile_TableViewCell: UITableViewCell {
     private func setupTrashButton() {
         trashButton = UIButton(type: .system)
         trashButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        trashButton.setImage(UIImage(systemName: "trash-fill"), for: .selected)
         contentView.addSubview(trashButton)
         trashButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -75,6 +76,7 @@ class AudioFile_TableViewCell: UITableViewCell {
     private func setupEditButton() {
         editButton = UIButton(type: .system)
         editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+//        editButton.setImage(UIImage(systemName: "pencil"), for: .selected)
         contentView.addSubview(editButton)
         editButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -95,6 +97,7 @@ class AudioFile_TableViewCell: UITableViewCell {
     }
 
     func trashButtonTapped() {
+        trashButton.isSelected = !playButton.isSelected
         delegate?.trashButtonTapped(cell: self) // Notify the delegate about the tap
     }
 
