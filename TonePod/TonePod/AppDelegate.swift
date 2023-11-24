@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Warning Suppresion:
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         // Warning Suppresion:
-        
+        Thread.sleep(forTimeInterval: 2)
         // Override point for customization after application launch.
         return true
     }
