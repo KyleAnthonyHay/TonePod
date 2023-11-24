@@ -10,6 +10,14 @@ import AVFoundation
 
 //!!AudioFile_TableViewCell_Delegate
 class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, AudioFile_TableViewCell_Delegate {
+    func trashButtonTapped(cell: AudioFile_TableViewCell) {
+        print("trashButtonTapped")
+    }
+    
+    func editButtonTapped(cell: AudioFile_TableViewCell) {
+        print("editButtonTapped")
+    }
+    
     //variables
     var groupedAudioFiles: [String] = []
     var audioPlayer: AVAudioPlayer?
