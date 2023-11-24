@@ -97,17 +97,17 @@ class AudioFile_TableViewCell: UITableViewCell {
     }
 
     func trashButtonTapped() {
-        // Animate the cell
-        UIView.animate(withDuration: 0.3, animations: {
-            // Example: Fade out the cell
-            self.alpha = 0.5
+        UIView.animate(withDuration: 0.5, animations: {
+            self.center.x += self.superview?.bounds.width ?? 0
+            self.alpha = 0
         }) { _ in
-            // Restore the original state after animation completes
-            self.alpha = 1.0
-            // Notify the delegate about the tap
+            self.center.x -= self.superview?.bounds.width ?? 0
+            self.alpha = 1
             self.delegate?.trashButtonTapped(cell: self)
         }
     }
+
+
 
 
     func editButtonTapped() {
