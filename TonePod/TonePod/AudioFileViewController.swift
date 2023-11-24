@@ -10,9 +10,6 @@ import AVFoundation
 
 //!!AudioFile_TableViewCell_Delegate
 class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, AudioFile_TableViewCell_Delegate {
-    func trashButtonTapped(cell: AudioFile_TableViewCell) {
-        print("trashButtonTapped")
-    }
     
     func editButtonTapped(cell: AudioFile_TableViewCell) {
         print("editButtonTapped")
@@ -123,16 +120,32 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         }
         currentPlayingCell = nil // Reset the current playing cell
     }
+    
+    func trashButtonTapped(cell: AudioFile_TableViewCell) {
+           if let indexPath = tableView.indexPath(for: cell) {
+               let fileName = groupedAudioFiles[indexPath.row]
+               deleteAudioFile(named: fileName, at: indexPath)
+               //Notify GroupView to Update
+           }
+       }
+    
+    private func deleteAudioFile(named fileName: String, at indexPath: IndexPath) {
+           let fileURL = documentsURL.appendingPathComponent(fileName)
+
+           do {
+               try fileManager.removeItem(at: fileURL)
+               groupedAudioFiles.remove(at: indexPath.row) // Update your data model
+               tableView.deleteRows(at: [indexPath], with: .fade) // Refresh the table view
+               NotificationCenter.default.post(name: .audioFileDeleted, object: nil)
+           } catch {
+               print("Error deleting file: \(error.localizedDescription)")
+               // Handle the error, perhaps show an alert to the user
+           }
+       }
 
 }
 
-
-//@objc func handlePlayButton(_ sender: UIButton) {
-//    print("Inside HandlePlayButton() Function!")
-//    if let cell = sender.superview as? AudioFile_TableViewCell,
-//       let indexPath = tableView.indexPath(for: cell) {
-//        // Handle play action for the item at indexPath
-//        let fileName = groupedAudioFiles[indexPath.row]
-//        playAudioFile(named: fileName)
-//    }
-//}
+// MARK: Extentions
+extension Notification.Name {
+    static let audioFileDeleted = Notification.Name("audioFileDeleted")
+}

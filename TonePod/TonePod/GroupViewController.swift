@@ -44,6 +44,7 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         updateFirstLetters() // for groups
         // Listen for new recording to update
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTableData), name: .didFinishRecording, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTableData), name: .audioFileDeleted, object: nil)
     }
     // Function for reloading the data
     @objc func refreshTableData() {
