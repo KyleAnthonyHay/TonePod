@@ -18,16 +18,12 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
-        
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LetterCell")
-
-        // Initial UI
-        self.view.backgroundColor = UIColor(red: 253/255.0, green: 253/255.0, blue: 253/255.0, alpha: 1.0)
         self.title = "Groups"
         navigationController?.tabBarItem.image = UIImage(systemName: "folder.fill")
         navigationController?.tabBarItem.title = "Groups"
@@ -57,19 +53,20 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
      func loadAudioFiles() {
          do {
              let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
-             audioFiles = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
-                               .map { $0.lastPathComponent } //audio files loaded
-             audioFiles.sort()
-//             print("Sorted audio files: \(audioFiles)")
-             tableView.reloadData()
+             let sortedURLs = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
+                                              .sorted { $0.lastPathComponent.localizedCaseInsensitiveCompare($1.lastPathComponent) == .orderedAscending }
+             audioFiles = sortedURLs.map { $0.lastPathComponent }
+             print("Sorted audio files: \(audioFiles)")
+//             tableView.reloadData()
          } catch {
              print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
          }
      }
     
     func updateFirstLetters() {
-            firstLetters = Set(audioFiles.map { $0.first ?? "#" })
-        }
+//        audioFiles.sort() // doesnt work
+        firstLetters = Set(audioFiles.map { $0.first ?? "#" })
+    }
     
     // MARK: Delegate & DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

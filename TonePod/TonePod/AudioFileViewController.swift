@@ -11,10 +11,6 @@ import AVFoundation
 //!!AudioFile_TableViewCell_Delegate
 class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, AudioFile_TableViewCell_Delegate {
     
-    func editButtonTapped(cell: AudioFile_TableViewCell) {
-        print("editButtonTapped")
-    }
-    
     //variables
     var groupedAudioFiles: [String] = []
     var audioPlayer: AVAudioPlayer?
@@ -22,6 +18,8 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
     let fileManager = FileManager.default
     let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     let letterClass: String //provided by Group Controller
+    var apiProvidedFileName2: RandomWord?
+    
     
     init(startswith: String){
         self.letterClass = startswith
@@ -128,6 +126,7 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
                //Notify GroupView to Update
            }
        }
+
     
     private func deleteAudioFile(named fileName: String, at indexPath: IndexPath) {
            let fileURL = documentsURL.appendingPathComponent(fileName)
@@ -142,6 +141,43 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
                // Handle the error, perhaps show an alert to the user
            }
        }
+    
+    func editButtonTapped(cell: AudioFile_TableViewCell) {
+        print("editButtonTapped")
+        promptForFileName()
+        
+    }
+    
+    func promptForFileName() {
+        let alertController = UIAlertController(title: "What letter should the name start with?", message: " ", preferredStyle: .alert)
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "first letter.."
+        }
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self, weak alertController] _ in
+            if let textField = alertController?.textFields?.first, let userInput = textField.text {
+                // MARK: API Call
+                Task {
+                    do {
+                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: userInput)
+                        self?.apiProvidedFileName2 = response
+                        print("From API: \(self?.apiProvidedFileName2?.word ?? "No word returned")")
+                        
+                        //rename cell
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+        }
+        alertController.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
 
 }
 

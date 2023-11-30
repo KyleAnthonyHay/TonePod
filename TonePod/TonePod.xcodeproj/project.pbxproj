@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8506CF5A2B0688D500214BA4 /* AudioFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506CF592B0688D500214BA4 /* AudioFileViewController.swift */; };
+		856A9B592B18CD7D0025C8CE /* PromptForFileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856A9B582B18CD7D0025C8CE /* PromptForFileName.swift */; };
 		857EFF7C2B095B2400FC41D2 /* AudioFile_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */; };
 		85B6AA6E2AE4389D00CDF4C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */; };
 		85B6AA702AE4389D00CDF4C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		8506CF592B0688D500214BA4 /* AudioFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileViewController.swift; sourceTree = "<group>"; };
+		856A9B582B18CD7D0025C8CE /* PromptForFileName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptForFileName.swift; sourceTree = "<group>"; };
 		857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFile_TableViewCell.swift; sourceTree = "<group>"; };
 		85B6AA6A2AE4389D00CDF4C0 /* TonePod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonePod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				8506CF592B0688D500214BA4 /* AudioFileViewController.swift */,
 				85B6AAA12AE8201800CDF4C0 /* RandomWordAPI.swift */,
 				85CA7AD32AF426B600BCDD7D /* AudioRecordingManager.swift */,
+				856A9B582B18CD7D0025C8CE /* PromptForFileName.swift */,
 				85B6AA732AE4389D00CDF4C0 /* Main.storyboard */,
 				85B6AA762AE4389E00CDF4C0 /* Assets.xcassets */,
 				85B6AA782AE4389E00CDF4C0 /* LaunchScreen.storyboard */,
@@ -168,6 +171,7 @@
 				857EFF7C2B095B2400FC41D2 /* AudioFile_TableViewCell.swift in Sources */,
 				85B6AAA22AE8201800CDF4C0 /* RandomWordAPI.swift in Sources */,
 				85B6AA6E2AE4389D00CDF4C0 /* AppDelegate.swift in Sources */,
+				856A9B592B18CD7D0025C8CE /* PromptForFileName.swift in Sources */,
 				85B6AA702AE4389D00CDF4C0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
