@@ -10,6 +10,8 @@ import AVFoundation
 
 //!!AudioFile_TableViewCell_Delegate
 class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, AudioFile_TableViewCell_Delegate {
+  
+    
     
     //variables
     var groupedAudioFiles: [String] = []
@@ -144,9 +146,20 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
     
     func editButtonTapped(cell: AudioFile_TableViewCell) {
         print("editButtonTapped")
-        promptForFileName()
         
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let oldFileName = groupedAudioFiles[indexPath.row]
+        
+        let response = promptForFileName()
+        
+        // Wait for the promptForFileName to complete
+        let newWord = self.apiProvidedFileName2?.word ?? "a"
+        renameAudioFile(oldFileName: oldFileName, newFileName: newWord)
+        
+        // Refresh the UI (reload table view)
+        tableView.reloadData()
     }
+
     
     func promptForFileName() {
         let alertController = UIAlertController(title: "What letter should the name start with?", message: " ", preferredStyle: .alert)
@@ -162,9 +175,8 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
                     do {
                         let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: userInput)
                         self?.apiProvidedFileName2 = response
-                        print("From API: \(self?.apiProvidedFileName2?.word ?? "No word returned")")
+                        print("From API(PromptForFileName(): \(self?.apiProvidedFileName2?.word ?? "No word returned")")
                         
-                        //rename cell
                     } catch {
                         print(error)
                     }
@@ -177,6 +189,26 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
+        
+    }
+
+    func renameAudioFile(oldFileName: String, newFileName: String) {
+        let oldFileURL = documentsURL.appendingPathComponent(oldFileName)
+        let newFileURL = documentsURL.appendingPathComponent(newFileName).appendingPathExtension(oldFileURL.pathExtension)
+
+        do {
+            // Rename the file in the filesystem
+            try fileManager.moveItem(at: oldFileURL, to: newFileURL)
+
+            // Update your data model
+            if let index = groupedAudioFiles.firstIndex(of: oldFileName) {
+                groupedAudioFiles[index] = newFileURL.lastPathComponent
+            }
+
+        } catch {
+            print("Error renaming file: \(error.localizedDescription)")
+            // Handle the error, perhaps show an alert to the user
+        }
     }
 
 }
