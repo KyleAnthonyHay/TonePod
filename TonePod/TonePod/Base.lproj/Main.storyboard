@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="2443" y="-440"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--My Tab Bar Controller-->
         <scene sceneID="Ep1-AM-1yA">
             <objects>
-                <tabBarController id="cac-3f-lMG" sceneMemberID="viewController">
+                <tabBarController id="cac-3f-lMG" customClass="MyTabBarController" customModule="TonePod" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="g80-ux-MTu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
