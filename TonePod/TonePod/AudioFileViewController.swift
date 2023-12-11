@@ -10,6 +10,7 @@ import AVFoundation
 
 //!!AudioFile_TableViewCell_Delegate
 class AudioFileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, AudioFile_TableViewCell_Delegate {
+    
   
     
     
@@ -154,6 +155,7 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         
         // Wait for the promptForFileName to complete
         let newWord = self.apiProvidedFileName2?.word ?? "a"
+        
         renameAudioFile(oldFileName: oldFileName, newFileName: newWord)
         
         // Refresh the UI (reload table view)
