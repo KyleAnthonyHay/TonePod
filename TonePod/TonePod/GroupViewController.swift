@@ -59,7 +59,7 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
              let sortedURLs = fileURLs.filter { $0.pathExtension == "m4a" || $0.pathExtension == "mp3" }
                                               .sorted { $0.lastPathComponent.localizedCaseInsensitiveCompare($1.lastPathComponent) == .orderedAscending }
              audioFiles = sortedURLs.map { $0.lastPathComponent }
-             print("Sorted audio files: \(audioFiles)")
+             //print("Sorted audio files: \(audioFiles)")
 //             tableView.reloadData()
          } catch {
              print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")

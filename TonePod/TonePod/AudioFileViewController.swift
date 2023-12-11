@@ -181,7 +181,7 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         return await withCheckedContinuation { continuation in
             let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
                 if let textField = alertController.textFields?.first, let userInput = textField.text {
-                    if userInput.count > 1 || !userInput.allSatisfy({ $0.isLetter }) {
+                    if userInput.count > 1 || !userInput.allSatisfy({ $0.isLetter }) || userInput == "" {
                         self.showInvalidResponsePopup()
                         return
                     }
