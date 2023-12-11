@@ -209,8 +209,13 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
             // Update your data model
             if let index = groupedAudioFiles.firstIndex(of: oldFileName) {
                 groupedAudioFiles[index] = newFileURL.lastPathComponent
+                
+            NotificationCenter.default.post(name: .audioFileEdited, object: nil)
             }
 
+            
+            
+            
         } catch {
             print("Error renaming file: \(error.localizedDescription)")
             // Handle the error, perhaps show an alert to the user
@@ -222,5 +227,6 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
 // MARK: Extentions
 extension Notification.Name {
     static let audioFileDeleted = Notification.Name("audioFileDeleted")
+    static let audioFileEdited = Notification.Name("audioFileEdited")
 }
 
