@@ -27,6 +27,8 @@ class GroupViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.title = "Groups"
         navigationController?.tabBarItem.image = UIImage(systemName: "folder.fill")
         navigationController?.tabBarItem.title = "Groups"
+        // Set the title color for this navigation bar
+        navigationController?.navigationBar.tintColor = UIColor.black
 
         // Do any additional setup after loading the view.
         view.addSubview(tableView)

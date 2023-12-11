@@ -28,7 +28,6 @@ class ViewController: UIViewController {
         audioManager = AudioRecordingManager(viewController: self)
         
         // Set the background color and title
-        self.view.backgroundColor = UIColor(red: 253/255.0, green: 253/255.0, blue: 253/255.0, alpha: 1.0)
         self.title = "Record"
         navigationController?.tabBarItem.image = UIImage(systemName: "record.circle")
         navigationController?.tabBarItem.title = "Record"

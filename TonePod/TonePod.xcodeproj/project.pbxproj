@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8506CF5A2B0688D500214BA4 /* AudioFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8506CF592B0688D500214BA4 /* AudioFileViewController.swift */; };
 		8513DD182B24DA93007A0F4E /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8513DD172B24DA93007A0F4E /* MyTabBarController.swift */; };
-		85481FC32B26AD22009D1C0C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85481FC22B26AD22009D1C0C /* Utility.swift */; };
 		857EFF7C2B095B2400FC41D2 /* AudioFile_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */; };
 		85B6AA6E2AE4389D00CDF4C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */; };
 		85B6AA702AE4389D00CDF4C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6AA6F2AE4389D00CDF4C0 /* SceneDelegate.swift */; };
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		8506CF592B0688D500214BA4 /* AudioFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileViewController.swift; sourceTree = "<group>"; };
 		8513DD172B24DA93007A0F4E /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
-		85481FC22B26AD22009D1C0C /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		857EFF7B2B095B2400FC41D2 /* AudioFile_TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFile_TableViewCell.swift; sourceTree = "<group>"; };
 		85B6AA6A2AE4389D00CDF4C0 /* TonePod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonePod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85B6AA6D2AE4389D00CDF4C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 				85B6AA762AE4389E00CDF4C0 /* Assets.xcassets */,
 				85B6AA782AE4389E00CDF4C0 /* LaunchScreen.storyboard */,
 				85B6AA7B2AE4389E00CDF4C0 /* Info.plist */,
-				85481FC22B26AD22009D1C0C /* Utility.swift */,
 			);
 			path = TonePod;
 			sourceTree = "<group>";
@@ -167,7 +164,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85481FC32B26AD22009D1C0C /* Utility.swift in Sources */,
 				85D6BF832B0521F200F8F967 /* GroupViewController.swift in Sources */,
 				85CA7AD42AF426B600BCDD7D /* AudioRecordingManager.swift in Sources */,
 				8506CF5A2B0688D500214BA4 /* AudioFileViewController.swift in Sources */,

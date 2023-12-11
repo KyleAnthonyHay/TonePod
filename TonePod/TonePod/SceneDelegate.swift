@@ -26,6 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 firstController?.loadViewIfNeeded()
             }
         }
+        // Set the global tint color for all tab bars
+        UITabBar.appearance().tintColor = UIColor.black
         
     }
 

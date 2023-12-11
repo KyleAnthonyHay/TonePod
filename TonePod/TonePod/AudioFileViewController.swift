@@ -44,6 +44,8 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(AudioFile_TableViewCell.self, forCellReuseIdentifier: "AudioFile")
+        // Set the title color for this navigation bar
+        
 
         // Do any additional setup after loading the view.
         view.addSubview(tableView)
@@ -54,6 +56,8 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
         filterAudioFiles(starts_with: letterClass)
+        
+
     }
     
     func filterAudioFiles(starts_with letter: String) {
@@ -81,6 +85,9 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         }
         cell.delegate = self // Set the view controller as the delegate
         cell.textLabel?.text = groupedAudioFiles[indexPath.row]
+        cell.imageView?.image = UIImage(systemName: "music.note") // Use the correct system image name
+            cell.imageView?.tintColor = .black // Set the tint color you want
+        
         return cell
     }
 
