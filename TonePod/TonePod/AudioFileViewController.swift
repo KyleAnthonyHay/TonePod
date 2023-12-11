@@ -174,6 +174,10 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         return await withCheckedContinuation { continuation in
             let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
                 if let textField = alertController.textFields?.first, let userInput = textField.text {
+                    if userInput.count > 1 || !userInput.allSatisfy({ $0.isLetter }) {
+                        self.showInvalidResponsePopup()
+                        return
+                    }
                     // Async API Call
                     Task {
                         do {
@@ -220,6 +224,13 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
             print("Error renaming file: \(error.localizedDescription)")
             // Handle the error, perhaps show an alert to the user
         }
+    }
+    
+    func showInvalidResponsePopup() {
+        let alert = UIAlertController(title: "Error", message: "Invalid Response.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
 
 }

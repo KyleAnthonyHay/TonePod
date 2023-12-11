@@ -107,6 +107,12 @@ class ViewController: UIViewController {
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self, weak alertController] _ in
             if let textField = alertController?.textFields?.first, let userInput = textField.text {
+                
+                if userInput.count > 1 || !userInput.allSatisfy({ $0.isLetter }) {
+                    self?.showInvalidResponsePopup()
+                    return
+                }
+                
                 // MARK: API Call
                 Task {
                     do {
@@ -131,6 +137,14 @@ class ViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
+    
+    func showInvalidResponsePopup() {
+        let alert = UIAlertController(title: "Error", message: "Invalid Response.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     @objc func onRecordButtonTapped() {
         if isRecording {
