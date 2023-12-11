@@ -39,6 +39,21 @@ class ViewController: UIViewController {
         recordButton.addTarget(self, action: #selector(onRecordButtonTapped), for: .touchUpInside)
         recordButton.translatesAutoresizingMaskIntoConstraints = false
         
+        recordButton.setTitleColor(.white, for: .normal)
+
+            // Set button background color to black
+            recordButton.backgroundColor = .black
+
+            // Make the button pill-shaped by setting the corner radius to half of the desired height
+            // Assuming a height of 50 for a comfortable tap target
+            recordButton.layer.cornerRadius = 12
+
+            // Font and font size remain bold and readable
+            recordButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+
+            // Padding for button content to ensure text is centered and has space around it
+            recordButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+
         // Add the button to the view
         self.view.addSubview(recordButton)
         
@@ -48,6 +63,7 @@ class ViewController: UIViewController {
             recordButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
     }
+
 
     // MARK: Handle Recording
     var isRecording = false
