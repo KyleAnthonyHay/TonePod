@@ -143,7 +143,7 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
                print("Error deleting file: \(error.localizedDescription)")
                // Handle the error, perhaps show an alert to the user
            }
-       }
+    }
     
     func editButtonTapped(cell: AudioFile_TableViewCell) {
         print("editButtonTapped")
@@ -151,47 +151,51 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         let oldFileName = groupedAudioFiles[indexPath.row]
         
-        let response = promptForFileName()
-        
-        // Wait for the promptForFileName to complete
-        let newWord = self.apiProvidedFileName2?.word ?? "a"
-        
-        renameAudioFile(oldFileName: oldFileName, newFileName: newWord)
-        
-        // Refresh the UI (reload table view)
-        tableView.reloadData()
+        Task {
+            if let newWord = await promptForFileName() {
+                renameAudioFile(oldFileName: oldFileName, newFileName: newWord)
+                // Refresh the UI (reload table view)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
 
     
-    func promptForFileName() {
+    func promptForFileName() async -> String? {
         let alertController = UIAlertController(title: "What letter should the name start with?", message: " ", preferredStyle: .alert)
         
         alertController.addTextField { (textField) in
             textField.placeholder = "first letter.."
         }
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { [weak self, weak alertController] _ in
-            if let textField = alertController?.textFields?.first, let userInput = textField.text {
-                // MARK: API Call
-                Task {
-                    do {
-                        let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: userInput)
-                        self?.apiProvidedFileName2 = response
-                        print("From API(PromptForFileName(): \(self?.apiProvidedFileName2?.word ?? "No word returned")")
-                        
-                    } catch {
-                        print(error)
+        // Create a promise
+        return await withCheckedContinuation { continuation in
+            let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+                if let textField = alertController.textFields?.first, let userInput = textField.text {
+                    // Async API Call
+                    Task {
+                        do {
+                            let response = try await RandomWordsAPI.shared.randomWordStartsWith(startingLetter: userInput)
+                            continuation.resume(returning: response.word)
+                        } catch {
+                            print(error)
+                            continuation.resume(returning: nil)
+                        }
                     }
+                } else {
+                    continuation.resume(returning: nil)
                 }
             }
+            alertController.addAction(confirmAction)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            present(alertController, animated: true, completion: nil)
+            
         }
-        alertController.addAction(confirmAction)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-        
     }
 
     func renameAudioFile(oldFileName: String, newFileName: String) {
@@ -219,3 +223,4 @@ class AudioFileViewController: UIViewController, UITableViewDataSource, UITableV
 extension Notification.Name {
     static let audioFileDeleted = Notification.Name("audioFileDeleted")
 }
+
