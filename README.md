@@ -1,6 +1,6 @@
 # 🎵 TonePod
 
-**TonePod** is an iOS app 📱 that allows users to record 🎙️ and share audio clips 🎶.
+**TonePod** is an iOS app 📱 that allows users to record and store audio clips based on the file name.
 
 ## Features 🌟
 
@@ -20,9 +20,9 @@ TonePod is built with:
 
 The app contains the following scenes:
 
-- 📋 Main storyboard
 - 👤 ViewController
 - 📁 GroupViewController
+- 📋 SortedAudioFileViewController
 - 🚀 Launch screen storyboard
 
 It uses the following capabilities:
@@ -38,10 +38,9 @@ Key files and components:
 - 🖼️ `SceneDelegate` - configures window scene.
 - 👁️ `ViewController` - initial view controller.
 - 📁 `GroupViewController` - manages groups of clips.
-- 🎨 `Assets` - app icons, launch images, colors.
 - ⚙️ `Info.plist` - app permissions, metadata.
-- 📋 `Main.storyboard` - main interface design.
 - 🚀 `LaunchScreen.storyboard` - launch screen design.
+- 🎨 `Assets` - app icons, launch images, colors.
 
 ## Setup 🛠️
 
